@@ -9,19 +9,19 @@ form='''
 <html>
     <head>
         <style>
-            form {
+            form {{
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }
-            textarea {
+            }}
+            textarea {{
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
-            }
+            }}
         </style>
     </head>
     <body>
@@ -32,7 +32,7 @@ form='''
         <input id="rot" type="text" name="rot" value="0">
         </label> 
         <label for="message">
-        <textarea id='message' name="text"></textarea>
+        <textarea id='message' name="text">{0}</textarea>
         </label> 
         
         <button type="submit"><strong>Submit Query</strong></button>
@@ -44,8 +44,11 @@ form='''
 
 @app.route('/')
 def index():
-    return form
+#will display form from form golbal variable
+    return form.format(" ")
 
+
+#returning form.format(variable) will allow data to return on same page in same form. (compared to just returning form)
 
 @app.route('/' , methods=["POST"])
 def encrypt():
@@ -53,6 +56,6 @@ def encrypt():
     rot = request.form['rot']
     encrypt_string = rotate_string(text, int(rot))
     
-    return "<h1>" + encrypt_string  + "</h1>"
-
+    return form.format(encrypt_string)
+#returning form.format(variable) will allow data to return on same page in same form(compared to returning encrypt_string)
 app.run()
